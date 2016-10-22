@@ -16,4 +16,4 @@ node index.js
 
 ## Run
 
-`nodemon index.js`
+`./run.sh`

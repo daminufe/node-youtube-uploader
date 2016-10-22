@@ -1,18 +1,5 @@
 'use strict';
 
-/**
- * This script uploads a video (specifically `video.mp4` from the current
- * directory) to YouTube,
- *
- * To run this script you have to create OAuth2 credentials and download them
- * as JSON and replace the `credentials.json` file. Then install the
- * dependencies:
- *
- * npm i r-json lien opn bug-killer
- *
- * Don't forget to run an `npm i` to install the `youtube-api` dependencies.
- * */
-
 const Youtube = require('youtube-api'),
     fs = require('fs'),
     Lien = require('lien'),
@@ -63,7 +50,7 @@ server.addPage('/oauth2/callback', lien => {
         }
 
         console.log('Got the tokens.');
-
+console.log(tokens);
         oauth.setCredentials(tokens);
 
         lien.end('The video is being uploaded. Check out the logs in the terminal.');
