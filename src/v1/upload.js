@@ -22,30 +22,30 @@ function upload (req, res) {
 
     oauth.setCredentials(tokens);
 
-    let youtubeRequest = Youtube.videos.insert({
+    let options = {
         resource: {
-            // Video title and description
             snippet: {
                 title: 'Test 2',
                 description: 'This is one more test'
             },
-            // I don't want to spam my subscribers
             status: {
                 privacyStatus: 'unlisted'
             }
         },
-        // This is for the callback function
         part: 'snippet,status',
-
-        // Create the readable stream to upload the video
         media: {
             body: fs.createReadStream('./video.mov')
         }
-    }, function (err, data) {
+    };
+
+    Youtube.videos.insert(options, callback);
+
+    function callback (err, data) {
         if (err) {
-            return console.error(err);
+            console.error(err);
+            return res.status(err.code).send(err);
         }
 
         res.send(data);
-    });
+    }
 }
