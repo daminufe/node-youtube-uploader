@@ -1,0 +1,17 @@
+{
+  "name": "youtube-uploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lien": "^1.5.0",
+    "opn": "^4.0.2",
+    "pretty-bytes": "^4.0.2",
+    "youtube-api": "^2.0.4"
+  }
+}
