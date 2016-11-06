@@ -8,9 +8,22 @@ const express = require('express'),
     oauth = require('./config/oauth.config.js'),
     Youtube = require('youtube-api');
 
-router.get('/', upload);
+router.post('/', getRaw, upload);
 
 module.exports = router;
+
+function getRaw (req, res, next) {
+    req.rawBody = '';
+    req.setEncoding('utf8');
+
+    req.on('data', function(chunk) {
+        req.rawBody += chunk;
+    });
+
+    req.on('end', function() {
+        next();
+    });
+}
 
 function upload (req, res) {
     const tokens = {
@@ -22,11 +35,14 @@ function upload (req, res) {
 
     oauth.setCredentials(tokens);
 
+    let buffer = Buffer.from(req.rawBody);
+    let arraybuffer = Uint8Array.from(buffer).buffer;
+
     let options = {
         resource: {
             snippet: {
-                title: 'Test 2',
-                description: 'This is one more test'
+                title: req.query.title,
+                description: req.query.description
             },
             status: {
                 privacyStatus: 'unlisted'
@@ -34,7 +50,7 @@ function upload (req, res) {
         },
         part: 'snippet,status',
         media: {
-            body: fs.createReadStream('./video.mov')
+            body: arraybuffer
         }
     };
 
